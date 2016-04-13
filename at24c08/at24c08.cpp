@@ -98,6 +98,7 @@ int eeprom_write(int fd, int address, uint8_t *buf, size_t len)
 		len -= size;
 		address += size;
 		retry = 0;
+		usleep(5000);
 	}
 	result = send;
 
