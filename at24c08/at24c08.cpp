@@ -11,8 +11,8 @@
 #define EEPROM_ADDRESS	0x50
 #define EEPROM_PAGESIZE	8
 
-extern int i2c_smbus_write_block_data(int fd, uint8_t command, uint8_t len, uint8_t *values);
-extern int i2c_smbus_read_block_data(int fd, uint8_t command, uint8_t *values);
+extern int i2c_smbus_write_i2c_block_data(int fd, uint8_t command, uint8_t len, uint8_t *values);
+extern int i2c_smbus_read_i2c_block_data(int fd, uint8_t command, uint8_t len, uint8_t *values);
 
 int eeprom_open(const char* i2c_adapter, int slave_address)
 {
@@ -50,7 +50,7 @@ int eeprom_write_page(int fd, int address, uint8_t *buf, size_t len)
 
 	uint8_t	command = (uint8_t)(address & 0xff);
 	len = len > EEPROM_PAGESIZE ? EEPROM_PAGESIZE : len;
-	int result = i2c_smbus_write_block_data(fd, command, len, buf);
+	int result = i2c_smbus_write_i2c_block_data(fd, command, len, buf);
 	if (result == 0)
 		result = len;
 	return result;
@@ -62,7 +62,7 @@ int eeprom_read_page(int fd, int address, uint8_t *buf, size_t len)
 		return -EINVAL;
 
 	uint8_t	command = (uint8_t)(address & 0xff);
-	return i2c_smbus_read_block_data(fd, command, buf);
+	return i2c_smbus_read_i2c_block_data(fd, command, len, buf);
 }
 
 int eeprom_write(int fd, int address, uint8_t *buf, size_t len)
@@ -75,7 +75,7 @@ int eeprom_write(int fd, int address, uint8_t *buf, size_t len)
 	if (!buf || len <= 0)
 		return -EINVAL;
 
-	while (len > 0)
+	while ((int)len > 0)
 	{
 		size_t	size = (EEPROM_PAGESIZE - address % EEPROM_PAGESIZE);
 		if (size > len)
@@ -117,9 +117,12 @@ int eeprom_read(int fd, int address, uint8_t *buf, size_t len)
 		return 0;
 
 	uint8_t	data[I2C_SMBUS_BLOCK_MAX];
-	while (len > 0)
+	while ((int)len > 0)
 	{
-		result = eeprom_read_page(fd, address, data, I2C_SMBUS_BLOCK_MAX);
+		size_t	size = (EEPROM_PAGESIZE - address % EEPROM_PAGESIZE);
+		if (size > len)
+			size = len;
+		result = eeprom_read_page(fd, address, data, size);
 		if (result < 0)
 		{
 			if (retry++ < c_retry_times)

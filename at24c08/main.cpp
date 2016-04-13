@@ -16,7 +16,7 @@ int eeprom_processor(int fd, int argc, char *argv[])
 {
 	int		address = 0;
 	int		len = 0;
-	uint8_t	buf[EEPROM_PAGESIZE * 16] = {0};
+	uint8_t	buf[EEPROM_PAGESIZE * 32] = {0};
 	int		result;
 
 	if (argc < 2)
