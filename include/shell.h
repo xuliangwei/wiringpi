@@ -4,6 +4,10 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef int (*func_process)(int argc, char *argv[]);
 
 typedef struct {
@@ -17,6 +21,10 @@ int parse_byte_array(int argc, char *argv[], uint8_t *buf, int buf_size);
 
 size_t dump_line(int address, uint8_t *buf, size_t len, size_t bytes_in_line);
 void dump_buffer(int address, uint8_t *buf, size_t len);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

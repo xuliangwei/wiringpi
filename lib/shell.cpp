@@ -1,5 +1,6 @@
 #include "shell.h"
 #include <stdlib.h>
+#include "shell.h"
 
 int parse_long(int argc, char *argv[], long *data)
 {
@@ -71,7 +72,7 @@ size_t dump_line(int address, uint8_t *buf, size_t len, size_t bytes_in_line)
 	printf("    ");
 	for (int i = 0; i < address - offset; i++)
 		printf(" ");
-	for (int i = 0; i < len; i++)
+	for (int i = 0; i < (int)len; i++)
 	{
 		if (buf[i] < 0x20 || buf[i] >= 0x7f)
 			ch = '.';

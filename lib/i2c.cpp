@@ -7,8 +7,7 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 #include <linux/i2c.h>
-
-extern size_t dump_line(int address, uint8_t *buf, size_t len, size_t bytes_in_line);
+#include "pi-i2c.h"
 
 int i2c_smbus_write_i2c_block_data(int fd, uint8_t command, uint8_t len, uint8_t *values)
 {

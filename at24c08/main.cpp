@@ -3,14 +3,11 @@
 #include <errno.h>
 #include <string.h>
 #include "shell.h"
+#include "pi-i2c.h"
+#include "at24c08.h"
 
 #define EEPROM_ADDRESS	0x50
 #define EEPROM_PAGESIZE	8
-
-extern int eeprom_open(const char* i2c_adapter, int slave_address);
-extern void eeprom_close(int fd);
-extern int eeprom_write(int fd, int address, uint8_t *buf, size_t len);
-extern int eeprom_read(int fd, int address, uint8_t *buf, size_t len);
 
 int eeprom_processor(int fd, int argc, char *argv[])
 {

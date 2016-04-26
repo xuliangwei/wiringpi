@@ -1,15 +1,13 @@
-LOCAL_PATH=`pwd`
 CC = gcc
 CPP = g++
-LD = gcc
+AR = ar
 CFLAGS = -I ../include
-LFLAGS = -L ../lib -l wiringPi -l pi3
-TARGET = a
+TARGET = libpi3.a
 SOURCES = $(wildcard *.c *.cpp)
 OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCES)))
 
 $(TARGET) : $(OBJS)
-	$(LD) $(LFLAGS) $(OBJS) -o $(TARGET)
+	$(AR) rcs $(TARGET) $(OBJS)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@

@@ -7,12 +7,10 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 #include <linux/i2c.h>
+#include "pi-i2c.h"
 
 #define EEPROM_ADDRESS	0x50
 #define EEPROM_PAGESIZE	8
-
-extern int i2c_smbus_write_i2c_block_data(int fd, uint8_t command, uint8_t len, uint8_t *values);
-extern int i2c_smbus_read_i2c_block_data(int fd, uint8_t command, uint8_t len, uint8_t *values);
 
 int eeprom_open(const char* i2c_adapter, int slave_address)
 {
@@ -88,7 +86,7 @@ int eeprom_write(int fd, int address, uint8_t *buf, size_t len)
 			else
 				goto exit;
 		}
-		else if (result != size)
+		else if (result != (int)size)
 		{
 			result += send;
 			goto exit;
