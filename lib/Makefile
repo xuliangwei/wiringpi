@@ -1,7 +1,7 @@
 CC = gcc
 CPP = g++
 AR = ar
-CFLAGS = -I ../include
+CFLAGS = -I../include
 TARGET = libpi3.a
 SOURCES = $(wildcard *.c *.cpp)
 OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCES)))
