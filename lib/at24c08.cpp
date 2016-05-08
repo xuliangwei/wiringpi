@@ -8,6 +8,7 @@
 #include <linux/i2c-dev.h>
 #include <linux/i2c.h>
 #include "pi-i2c.h"
+#include "at24c08.h"
 
 #define EEPROM_ADDRESS	0x50
 #define EEPROM_PAGESIZE	8
