@@ -9,7 +9,7 @@ SOURCES = $(wildcard *.c *.cpp)
 OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCES)))
 
 $(TARGET) : $(OBJS)
-	$(LD) $(LFLAGS) $(OBJS) -o $(TARGET)
+	$(LD) $(OBJS) $(LFLAGS) -o $(TARGET)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
