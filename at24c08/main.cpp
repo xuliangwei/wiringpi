@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 		goto exit;
 	}
 
-	return eeprom_processor(fd, argc-1, argv+1);
+	result = eeprom_processor(fd, argc-1, argv+1);
 	
 exit:
 	if (fd >= 0)
